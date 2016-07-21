@@ -1,0 +1,21 @@
+
+Import-Module JAMS -EA SilentlyContinue
+
+$oldFolder = "\Samples\"
+$newFolder = "\Test\"
+
+# Get the Setup
+$setup = GCI JD:\Test\TestSetup
+
+#
+# Update the Setup Job reference paths to the new Folder
+#
+foreach($setupJob in $setup.Jobs)
+{
+    Write-Host "Current Reference: "$setupJob.JobName
+    $setupJob.JobName = $setupJob.JobName.Replace($oldFolder,$newFolder)
+    Write-Host "Updated Reference: "$setupJob.JobName
+}
+
+# Save changes
+$setup.Update() 
